@@ -2,14 +2,10 @@ import socket
 from urllib.parse import urlparse
 import re
 #import string
-# from data get content type and store it
-# from data get response code and store it
+
 # from data get number of headers and store it
 # from data get number of lines in body and store it
-# from data get body content type (text/html or text/plain) and store it
 # Print to user:
-# content: type
-# Response: code
 # Headers: number
 # Body: lines
 
