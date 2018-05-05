@@ -3,7 +3,9 @@
 Sites I referenced for Python 3 Sockets/http Requests:
 
 https://docs.python.org/3/library/socket.html
+
 https://www.w3.org/Protocols/rfc2616/rfc2616.html (overview of HTTP components)
+
 https://docs.python.org/3/library/urllib.parse.html
 
 
