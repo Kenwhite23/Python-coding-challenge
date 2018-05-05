@@ -25,8 +25,9 @@ PORT = 80
 ######################################################################################################
 # Variables used to Build our Request Payload
 CRLF = "\r\n\r\n"
-gets = 'GET ' + path + url.query + ' HTTP/1.0%s' % CRLF
-hosts = 'Host: ' + HOST
+query = '?' + url.query
+gets = 'GET ' + path + query + ' HTTP/1.1\r\n'
+hosts = 'Host:' + HOST + CRLF
 payload = (gets + hosts)
 #######################################################################################################
 
