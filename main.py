@@ -1,6 +1,7 @@
 import socket
 from urllib.parse import urlparse
-
+import re
+import string
 # from data get content type and store it
 # from data get response code and store it
 # from data get number of headers and store it
@@ -43,15 +44,33 @@ def GET(url):  # Get Function, This creates our socket connects to our website s
     s.shutdown(1)
     s.close()
 
-def datas(): #Pulls Data we need, and then Prints it to user (still to be done currently displays full GET response)
+#def normalize_line_endings(s):
+#   return ''.join((line + '\n') for line in s.splitlines())
 
-    print (url, '\n')
-    print (payload,'\n')
-    print (data)
+#def datas(): #Pulls Data we need, and then Prints it to user (still to be done currently displays full GET response)
+ #   global data2
+ #   data2 = normalize_line_endings(data)
+ #   data2 = data2.split('\n')
 
+def contenttype():
+    cont1 = re.compile('text/plain')
+    textplain = cont1.search(data)
+    cont2 = re.compile('text/html')
+    texthtml = cont2.search(data)
+    if textplain:
+        print('Content Type: ', textplain.group())
+    elif texthtml:
+        print('Content Type: ', texthtml.group())
+
+def responsecode():
+    r = re.compile('[1-9][0-9][0-9] ')
+    rc = r.search(data)
+    if rc:
+        print('Response Code: ', rc.group())
 
 
 GET(url)
 datas()
-
+contenttype()
+responsecode()
 
