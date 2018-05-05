@@ -34,9 +34,9 @@ ________________________________________________________________________________
 Script Description:
 
 We accept the input of a url from the user, and then parse that url.
-We then use the parsed data to Generate our GET request formated as follows:
+We then use the parsed data to Generate our GET request formatted as follows:
 
-Get /path http/1.0
+Get /path/query http/1.0
 Host:url
 
 We Send the utf-8 encoded GET payload and Then decode the Websites Response, and save the Resulting String to the
