@@ -55,10 +55,8 @@ def GET(url):  # Get Function, This creates our socket connects to our website s
 #################################################################################################
 def contenttype():
     cont1 = re.compile('text/plain')
-    global textplain
     textplain = cont1.search(data)
     cont2 = re.compile('text/html')
-    global texthtml
     texthtml = cont2.search(data)
     if textplain:
         print('Content Type: ', textplain.group())
