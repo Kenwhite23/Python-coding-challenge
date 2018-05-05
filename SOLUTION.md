@@ -21,10 +21,10 @@ ________________________________________________________________________________
  send request
  receive data and store it
  close socket
- from data get content type and store it
- from data get response code and store it
- from data get number of headers and store it
- from data get number of lines in body and store it if content type (text/html or text/plain)
+ from data get content type and print to user
+ from data get response code and print to user
+ from data get number of headers and print to user
+ from data get number of lines in body and print to user (text/html or text/plain)
  Print to user:
     Content Type:
     Response:
@@ -44,5 +44,8 @@ Host:url
 We Send the utf-8 encoded GET payload and Then decode the Websites Response, and save the Resulting String to the
 global variable Data.
 
-At this point a Second function runs that Filters the Data to pull the Necessary information required.
-We then Print the necessary information to the user.
+We then take the data and run it through function contenttype to filter out and print to user the content type
+
+This then repeats but with function responsecode to filter out and print to the user the response code
+
+following
