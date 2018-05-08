@@ -30,10 +30,11 @@ ________________________________________________________________________________
     Response:
     Headers:
     Body Lines:
+ Give User Option to View Full Response from url
 
 *************************************************************************************************
 
-Script Description:
+Program Description:
 
 We accept the input of a url from the user, and then parse that url.
 We then use the parsed data to Generate our GET request formatted as follows:
@@ -48,4 +49,12 @@ We then take the data and run it through function contenttype to filter out and 
 
 This then repeats but with function responsecode to filter out and print to the user the response code
 
-following
+afterwords we run the data through a regex to locate the headers and then after
+removing false headers (the location header returns a url causing http: or https: to give a false regex match)
+we count the total number of headers using len(result) and display it to the user.
+
+Finally we get the number of body lines and display it to the user.
+
+At the end we provide the user the option to display the full response from the URL in case they want more detailed information
+the prompt accepts y, Y, yes, and Yes all as valid options to display the full response because people do not often follow instructions when prompted to enter y/n
+
