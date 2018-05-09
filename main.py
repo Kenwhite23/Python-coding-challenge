@@ -44,12 +44,16 @@ def contenttype():  # The contenttype() funtion searches for the content type ei
     cont2 = re.compile('text/html')
     texthtml = cont2.search(data)
     other = ""
+    global content
     if textplain:
         print('Content Type: ', textplain.group())
+        content = 'text/plain'
     elif texthtml:
         print('Content Type: ', texthtml.group())
+        content = 'text/html'
     else:
         print('Content Type: No content type was returned!')
+        content = 'error'
 
 def responsecode():  #  the responsecode function searches our data for the 3 digit response code and displays it to the user.
     #  In the odd event theres an error or no response code is sent it displays no response code returned to the user while sighing painfully at someones broken website
@@ -74,21 +78,63 @@ def headercount():
     if hc:
         print('Header Count: ', hc)
     else:  #  In the unlikely event that we cant ascertain the header count we display a prompt to let the user know the count is unvailable
-        print('Header Count: Header Count unavailable!')
+        print('Header Count: Header Count Unavailable!')
 
-def bodylines():
-    bl = ""
-    if bl == 6:
-        print('Body Line Count: ')
+
+def normalize_line_endings(s): # used by bodylinest() for data processing to count plain text lines in a body
+   return ''.join((line + '\n') for line in s.splitlines())
+
+
+def bodylinesh(): # html body message lines all start with < so we cheat and use a regex that only finds the < at the beggining of a line and count it.
+    b = re.findall('^<', data, flags=re.MULTILINE)
+    bl = len(b)
+    if bl:
+        print('Body Line Count: ', bl)
+
+def bodylinest(): # html body message lines all start with < so we cheat and use a regex that only finds the < at the beggining of a line and count it.
+    # This first section normalizes all the endings in the data, (\r becomes \n)
+    # we then split the data into a list, and chance the blank lines in the body response to read "blank"
+    #Knowing that theres a blank line at the start of every body, we use that to remove the headers from the list
+    #Afterwords we count the remaining lines including the blank lines
+    #If we only wanted to count non blank lines we would add a line to remove all of the "blank" values in the list.
+    #procdat = proccessed data in case you were wondering why procdat
+    procdat = normalize_line_endings(data)
+    procdat = procdat.split('\n')
+    procdat = list(map(lambda x: str(x) if x else 'blank' , procdat))
+    procdat = procdat[procdat.index('blank'):]
+
+    if procdat:
+        print('Body Line Count: ', len(procdat))
     else:
         print('Body Line Count: Body Line Count Unavailable!')
 
+def bodylinesrun(): #This does a content type check to determine wether to run bodylinesh or bodylinest to properly extrapolate the number of lines in the body if a body was returned
+    if content == 'text/plain':
+        bodylinest()
+    elif content == 'text/html':
+        bodylinesh()
+    else:
+        print('Body Lines Count: No body line count available')
+
 def viewfullresponse():  # viewfullresponse gives the user the option at the end to view the full response that was recieved after sending our payload
-    s = input('Would you like to view the full response? (y/n)')
-    if s == 'y' or 'Y' or 'yes' or 'Yes':
+    vfr = input('Would you like to view the full response? (y/n)')
+    if vfr == 'y':
         print('\n****************************************')
         print (data)
         print('****************************************')
+    elif vfr == 'Y':
+        print('\n****************************************')
+        print (data)
+        print('****************************************')
+    elif vfr == 'yes':
+        print('\n****************************************')
+        print (data)
+        print('****************************************')
+    elif vfr == 'Yes':
+        print('\n****************************************')
+        print (data)
+        print('****************************************')
+
 
 def main():
     # Technically not a requirement in python but i like clean code, this is our main loop, and runs everything we need done in order,
@@ -98,7 +144,7 @@ def main():
     contenttype()
     responsecode()
     headercount()
-    bodylines()
+    bodylinesrun()
     print('****************************************')
     viewfullresponse()
 
